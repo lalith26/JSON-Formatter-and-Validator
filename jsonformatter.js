@@ -26,10 +26,14 @@ window.addEventListener('load',function(event){
     if(isValid){
       document.getElementById("result").style.display = "block";
       document.getElementById("valid").style.display = "block";
+      document.getElementById("compactjson").style.display = "block";
+      document.getElementById("stringifiedjson").style.display = "block";
     }
     else{
       document.getElementById("result").style.display = "block";
       document.getElementById("invalid").style.display = "block";
+      document.getElementById("compactjson").style.display = "none";
+      document.getElementById("stringifiedjson").style.display = "none";
     }
 
     if(isValid){
