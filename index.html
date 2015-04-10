@@ -1,126 +1,143 @@
-<!doctype html>
-
 <html>
   <head>
-    <title>JSON Formatter</title>
+    <title>JSON Formatter and Validator</title>
     <style type="text/css">
-    *{
-      padding:0;
-      margin:0;
-    }
+      *{
+        padding:0;
+        margin:0;
+      }
 
-    #heading{
-      margin-bottom:10px;
-      box-sizing:border-box;
-      padding-top:20px;
-      padding-left:20px;
-    }
+      #heading{
+        margin-bottom:10px;
+        box-sizing:border-box;
+        padding-top:20px;
+        padding-left:20px;
+      }
 
-    #container #input{
-      margin-top:10px;
-      margin-left:20px;
-    }
+      #description{
+        font-size:1.2em;
+        margin-top:10px;
+        box-sizing:border-box;
+        padding-top:10px;
+        padding-left:20px;
+      }
 
-    #container #input #description{
-      margin-bottom:10px;
-      font-size:1.2em;
-    }
+      #container{
+        width:100%;
+        box-sizing:border-box;
+        padding-top:10px;
+        padding-left:20px;
 
-    #container #input #inputjson{
+      }
+      #input{
+        display:inline-block;
+        width:47%;
+        height:100%;
+      }
+
+      #result{
+        display:inline-block;
+        width:47%;
+        height:100%;
+        margin-left:2%;
+      }
+
+      #jsonform{
+        position:absolute;
+      }
+
+      #container #input #inputjson{
       border-radius:2px;
-    }
+      }
 
-    #container #input #formatjson{
-      width:100px;
-      height:30px;
-      font-size:1.2em;
-      background-color:#008CBA;
-      border:none;
-      color:white;
-      margin-top:5px;
-    }
+      #container #input #formatjson{
+        width:200px;
+        height:30px;
+        font-size:1.2em;
+        background-color:#008CBA;
+        border:none;
+        color:white;
+        margin-top:5px;
+      }
 
-    #container #input #formatjson:hover{
-      width:110px;
-      height:40px;
-    }
+      #container #input #formatjson:hover{
+        width:210px;
+        height:40px;
+      }
 
-    #container #result{
-      margin-top:10px;
-      margin-left:20px;
-      display:none;
-    }
+      #resultcontainer{
+        position:absolute;
+        display:none;
+      }
 
-    #container #result hr{
-      position:relative;
-      left:-10px;
-    }
 
-    #container #result #validity #valid{
-      width:90%;
-      height:30px;
-      background-color:#43AC6A;
-      color:white;
-      margin-top:10px;
-      margin-bottom:10px;
-      box-sizing:border-box;
-      padding-left:5px;
-      padding-top:10px;
-      border-radius:2px;
-      display:none;
-    }
-    #container #result #validity #invalid{
-      width:90%;
-      height:30px;
-      background-color:#f04124;
-      color:white;
-      margin-top:10px;
-      margin-bottom:10px;
-      box-sizing:border-box;
-      padding-left:5px;
-      padding-top:10px;
-      border-radius:2px;
-      display:none;
-    }
 
-    #container #result #compactjson{
-      margin-top:10px;
-      margin-bottom:10px;
-    }
+      #validity #valid{
+        width:90%;
+        height:30px;
+        background-color:#43AC6A;
+        color:white;
+        margin-top:10px;
+        margin-bottom:10px;
+        box-sizing:border-box;
+        padding-left:5px;
+        padding-top:10px;
+        border-radius:2px;
+        display:none;
+      }
 
-    #container #result #compactjson h3{
-      display:inline;
-    }
+      #validity #invalid{
+        width:90%;
+        height:30px;
+        background-color:#f04124;
+        color:white;
+        margin-top:10px;
+        margin-bottom:10px;
+        box-sizing:border-box;
+        padding-left:5px;
+        padding-top:10px;
+        border-radius:2px;
+        display:none;
+      }
+      #compactjson{
+        display:none;
+      }
 
-    #container #result #compactjson #resultcompactjson{
-      margin-top:10px;
-      margin-bottom:10px;
-    }
+      #compactjson #resultcompactjson{
+        margin-top:10px;
+        margin-bottom:10px;
+      }
 
-    #container #result #stringifiedjson{
-      margin-top:10px;
-      margin-bottom:10px;
-    }
+      #stringifiedjson{
+        display:none;
+      }
 
-    #container #result #stringifiedjson #resultstringifiedjson{
-      margin-top:10px;
-      margin-bottom:10px;
-    }
+      #resultstringifiedjson{
+        margin-top:10px;
+        margin-bottom:10px;
+      }
+      #beautifiedjson{
+        display:none;
+      }
 
-    #contactperson{
-      margin-top:10px;
-      margin-left:20px;
-    }
+      #resultbeautifiedjson{
+        margin-top:10px;
+        margin-bottom:10px;
+      }
 
-    #contactperson h4{
-      text-align:right;
-      box-sizing:border-box;
-      padding-right:20px;
-      padding-top:10px;
-      padding-bottom:10px;
-    }
+      #errormessage{
+        margin-top:10px;
+        margin-bottom:10px;
+        display:none;
+      }
+
+      #contact span{
+
+        font-weight:bold;
+        margin-right:10px;
+      }
+
     </style>
-
     <script src="jsonlint.js"></script>
     <script src="json2.js"></script>
     <script src="jsonformatter.js"></script>
@@ -130,47 +147,53 @@
       <h1>JSON Validator and Formatter</h1>
     </div>
     <hr/>
+    <div id="description">
+        A simple Tool to validate and produce Compact and Stringified JSON.<br/>
+        Stringified JSON is used in Bluefin tests and Compact JSON might be needed when writing automation test cases.
+    </div>
     <div id="container">
       <div id="input">
-        <div id="description">
-          A simple Tool to validate and produce Compact and Stringified JSON.<br/>
-          Stringified JSON is used in Bluefin tests and Compact JSON might be needed when writing automation test cases.
-        </div>
         <form id="jsonform">
           <textarea id="inputjson" name="inputjson" rows="30" cols="100" placeholder="Enter JSON"></textarea>
           <br/>
-          <button id="formatjson">Process</button>
+          <button id="formatjson">Compact JSON</button>
         </form>
       </div>
-
-      <br/><br/>
       <div id="result">
-        <div id="validity">
-          <h3>Validity</h3>
-          <div id="valid">Valid JSON</div>
-          <div id="invalid">Invalid JSON</div>
-        </div>
-        <div id="compactjson">
-          <h3>Compact JSON</h3>
-          <div id="resultcompactjson">
+        <div id="resultcontainer">
+          <div id="validity">
+            <h3>Validity</h3>
+            <div id="valid">Valid JSON</div>
+            <div id="invalid">Invalid JSON</div>
+            <div id="errormessage"></div>
           </div>
-        </div>
-        <div id="stringifiedjson">
-          <h3>Stringified JSON</h3>
-          <div id="resultstringifiedjson">
+          <div id="compactjson">
+            <h3>Compact JSON</h3>
+            <textarea id="resultcompactjson" rows="15" cols="100">
+            </textarea>
           </div>
-        </div>
-        <div id="errormessage">
+          <div id="stringifiedjson">
+            <h3>Stringified JSON</h3>
+            <textarea id="resultstringifiedjson" rows="15" cols="100">
+            </textarea>
+          </div>
+          <div id="beautifiedjson">
+            <h3>Beautified JSON</h3>
+            <textarea id="resultbeautifiedjson" rows="15" cols="100">
+            </textarea>
+          </div>
+          <div id="errormessage">
             <h3>Error message</h3>
+            <div id="errmsg"></div>
+          </div>
         </div>
-      </div>
-      <br/>
-      <hr/>
-      <div id="contactperson">
-        <h4>For any queries or suggestions, Please contact labr@paypal.com</h4>
       </div>
     </div>
 
-
+    <div id="contact">
+      <span>
+        *For any queries or suggestions, please contact labr@paypal.com
+      </span>
+    </div>
   </body>
 </html>
