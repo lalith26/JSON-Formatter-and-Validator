@@ -8,19 +8,24 @@ window.addEventListener('load',function(event){
     document.getElementById("invalid").style.display = "none";
     document.getElementById("compactjson").innerHTML="<h3>Compact JSON</h3><div id='resultcompactjson'></div>";
     document.getElementById("stringifiedjson").innerHTML="<h3>Stringified JSON</h3><div id='resultstringifiedjson'></div>";
+    document.getElementById("errormessage").innerHTML="<h3>Error</h3><div id='errmsg'></div>";
 
     var inputjson = document.getElementById("inputjson").value;
     //checking validity of json
     var isValid = false;
     try{
-      var result = JSON.parse(inputjson);
-      if(result && typeof result === "object" && result !== null)
+      var result = jsonlint.parse(inputjson);
+      if(result){
         isValid = true;
+      }
     }
     catch(e){
       console.log("Exception:"+e);
       document.getElementById("result").style.display = "block";
       document.getElementById("invalid").style.display = "block";
+      document.getElementById("errormessage").style.display = "block";
+      var errormessage = document.getElementById("errmsg");
+      errormessage.innerHTML += e;
     }
 
     if(isValid){
